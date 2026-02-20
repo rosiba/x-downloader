@@ -18,6 +18,11 @@ func main() {
 		log.Panic("TELEGRAM_WEBHOOK_URL environment variable not set")
 	}
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Panic("PORT environment variable not set")
+	}
+
 	bot, err := botapi.NewBotAPI(key)
 	if err != nil {
 		log.Panic(err)
