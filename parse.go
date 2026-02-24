@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"log"
 	"os/exec"
 	"strings"
 )
@@ -11,6 +12,8 @@ func getURL(xURL string) (string, error) {
 
 	var out bytes.Buffer
 	cmd.Stdout = &out
+
+	log.Println("yt-dlp output:", out.String())
 
 	err := cmd.Run()
 	if err != nil {

@@ -54,13 +54,15 @@ func main() {
 	log.Println("Bot is now running.")
 
 	for update := range updates {
-		log.Printf("%+v\n", update)
-		log.Println(update.Message)
+		log.Println(update.Message.Text)
 		if update.Message == nil {
 			url, err := getURL(update.Message.Text)
 			if err != nil {
+				log.Println("Failed to get URL", err)
 				msg := botapi.NewMessage(update.Message.Chat.ID, "Failed to fetch link")
-				bot.Send(msg)
+				if _, err := bot.Send(msg); err != nil {
+					log.Println("Failed to send message", err)
+				}
 				continue
 
 			}
