@@ -13,12 +13,12 @@ func getURL(xURL string) (string, error) {
 	var out bytes.Buffer
 	cmd.Stdout = &out
 
-	log.Println("yt-dlp output:", out.String())
-
 	err := cmd.Run()
 	if err != nil {
 		return "", err
 	}
+
+	log.Println("yt-dlp output:", out.String())
 
 	return strings.TrimSpace(out.String()), nil
 }
