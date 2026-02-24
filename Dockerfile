@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:alpine AS compile
 LABEL authors="rosiba"
 
 RUN apk add --no-cache git
@@ -12,9 +12,13 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o bot-service .
 
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
 WORKDIR /root/
 
-COPY --from=builder /app/bot-service .
+COPY --from=compile /app/bot-service .
 
 EXPOSE 8000
 
