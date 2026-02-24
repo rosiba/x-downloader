@@ -55,7 +55,7 @@ func main() {
 
 	for update := range updates {
 		log.Println(update.Message.Text)
-		if update.Message == nil {
+		if update.Message != nil {
 			url, err := getURL(update.Message.Text)
 			if err != nil {
 				log.Println("Failed to get URL", err)
