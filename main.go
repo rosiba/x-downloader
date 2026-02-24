@@ -55,6 +55,7 @@ func main() {
 
 	for update := range updates {
 		log.Printf("%+v\n", update)
+		log.Println(update.Message)
 		if update.Message == nil {
 			url, err := getURL(update.Message.Text)
 			if err != nil {
