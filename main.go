@@ -55,5 +55,16 @@ func main() {
 
 	for update := range updates {
 		log.Printf("%+v\n", update)
+		if update.Message == nil {
+			url, err := getURL(update.Message.Text)
+			if err != nil {
+				msg := botapi.NewMessage(update.Message.Chat.ID, "Failed to fetch link")
+				bot.Send(msg)
+				continue
+
+			}
+			msg := botapi.NewMessage(update.Message.Chat.ID, url)
+			bot.Send(msg)
+		}
 	}
 }
