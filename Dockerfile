@@ -15,7 +15,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o bot-service .
 FROM alpine:latest
 
 RUN apk add --no-cache \
-    python 3 \
+    python3 \
     ffmeg \
     ca-certificates \
     curl
