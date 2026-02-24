@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	botapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -39,5 +40,20 @@ func main() {
 		log.Panic(err)
 	}
 
+	info, err := bot.GetWebhookInfo()
+	if err != nil {
+		log.Panic(err)
+	}
+
+	if info.LastErrorDate != 0 {
+		log.Printf("Telegram callback failed: %s", info.LastErrorMessage)
+	}
+
+	updates := bot.ListenForWebhook("/" + bot.Token)
+	go http.ListenAndServe("0.0.0.0:"+port, nil)
 	log.Println("Bot is now running.")
+
+	for update := range updates {
+		log.Printf("%+v\n", update)
+	}
 }
